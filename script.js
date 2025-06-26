@@ -1,4 +1,4 @@
-let blogs = "";
+let blogs = [];
 
 async function getPosts() {
   try {
