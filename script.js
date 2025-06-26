@@ -17,13 +17,13 @@ getPosts().then(() => {
   generateHTML(blogs);
 });
 
-function generateHTML(blogs) {
+async function generateHTML(blogs) {
   const parent = document.querySelector(".contain23");
   parent.innerHTML = "";
 
-  blogs.forEach((blog) => {
+  blogs.forEach((blog, index) => {
     const html = `
-      <div class="container">
+      <div class="container" onclick="main(${index})">
         <div class="image2">
           <img class="image" src="${blog.author}.png" alt="image" />
         </div>
@@ -38,4 +38,29 @@ function generateHTML(blogs) {
     `;
     parent.innerHTML += html;
   });
+}
+
+async function generatePopup(blog) {
+  const mommy = document.querySelector(".pop");
+  mommy.innerHTML = `
+    <dialog class="dia">
+      <div class="top2">
+        <img src="${blog.author}.png" alt="image" class="img1" />
+        <h2 class="title2">${blog.title}</h2>
+        <h3 class="date2">&middot; ${blog.date}</h3>
+      </div>
+      <div class="main23">
+        <p class="main22">${blog.fullContent}</p>
+      </div>
+      <button class="butt" onclick="document.querySelector('.dia').close()">
+        Close
+      </button>
+    </dialog>
+  `;
+}
+
+async function main(index) {
+  const blog = blogs[index];
+  await generatePopup(blog);
+  document.querySelector(".dia").showModal();
 }
