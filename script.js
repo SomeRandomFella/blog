@@ -1,4 +1,5 @@
-let blogs = [];
+let blogs = "";
+const hm = document.querySelector(".dark2");
 
 async function getPosts() {
   try {
@@ -63,4 +64,22 @@ async function main(index) {
   const blog = blogs[index];
   await generatePopup(blog);
   document.querySelector(".dia").showModal();
+}
+
+hm.addEventListener("click", () => {
+  toggleDarkMode();
+});
+
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+  document.querySelector("header").classList.toggle("dark5");
+  document.querySelector(".contain23").classList.toggle("dark6");
+  document.querySelector(".dia").classList.toggle("dark5");
+  if (document.body.classList.contains("dark")) {
+    hm.innerHTML = "🌞";
+    hm.classList.add("dark2");
+  } else {
+    hm.innerHTML = "🌙";
+    hm.classList.add("dark2");
+  }
 }
