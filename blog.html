@@ -1,38 +1,66 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sexy's sexy blog</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="icon" href="sexy.png" type="image/png" />
+let blogs = "";
 
-    <!-- google fonts oh btw why u looking at my shit code? hmmm -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+async function getPosts() {
+  try {
+    const response = await fetch(
+      "https://raw.githubusercontent.com/SomeRandomFella/backend/main/blogs.json"
+    );
+    if (!response.ok) throw new err("didnt work idk");
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+    blogs = await response.json();
+  } catch (e) {
+    console.log(`hey retard ${e}`);
+  }
+}
 
-    <!--HOLY fuck bro google fonts are thirst traps ts shit looks so buns compared to how it looked on google fonts-->
-  </head>
-  <body>
-    <div class="pop"></div>
+getPosts().then(() => {
+  generateHTML(blogs);
+});
 
-    <header>Sexy's Sexy Blog 😉</header>
+async function generateHTML(blogs) {
+  const parent = document.querySelector(".contain23");
+  parent.innerHTML = "";
 
-    <div class="contain23">
-      <div class="container"></div>
-    </div>
+  blogs.forEach((blog, index) => {
+    const html = `
+      <div class="container" onclick="main(${index})">
+        <div class="image2">
+          <img class="image" src="${blog.author}.png" alt="image" />
+        </div>
+        <div class="details">
+          <div class="top">
+            <h3 class="title">${blog.title}</h3>
+            <h3 class="date">&middot; ${blog.date}</h3>
+          </div>
+          <p class="description">${blog.description}</p>
+        </div>
+      </div>
+    `;
+    parent.innerHTML += html;
+  });
+}
 
-    <script src="script.js"></script>
-  </body>
-</html>
+async function generatePopup(blog) {
+  const mommy = document.querySelector(".pop");
+  mommy.innerHTML = `
+    <dialog class="dia">
+      <div class="top2">
+        <img src="${blog.author}.png" alt="image" class="img1" />
+        <h2 class="title2">${blog.title}</h2>
+        <h3 class="date2">&middot; ${blog.date}</h3>
+      </div>
+      <div class="main23">
+        <p class="main22">${blog.fullContent}</p>
+      </div>
+      <button class="butt" onclick="document.querySelector('.dia').close()">
+        Close
+      </button>
+    </dialog>
+  `;
+}
+
+async function main(index) {
+  const blog = blogs[index];
+  await generatePopup(blog);
+  document.querySelector(".dia").showModal();
+}
