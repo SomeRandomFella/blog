@@ -1,5 +1,6 @@
 let blogs = "";
 const hm = document.querySelector(".dark2");
+const skibidi = document.querySelector(".search2");
 
 async function getPosts() {
   try {
@@ -83,3 +84,13 @@ function toggleDarkMode() {
     hm.classList.add("dark2");
   }
 }
+
+skibidi.addEventListener("input", (e) => {
+  const searchTerm = e.target.value.toLowerCase();
+  const filteredBlogs = blogs.filter(
+    (blog) =>
+      blog.title.toLowerCase().includes(searchTerm) ||
+      blog.description.toLowerCase().includes(searchTerm)
+  );
+  generateHTML(filteredBlogs);
+});
