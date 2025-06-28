@@ -188,3 +188,25 @@ dialog {
   background-color: transparent;
   color: white;
 }
+
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 70px;
+}
+.search2 {
+  padding: 10px;
+  padding-right: 350px;
+  border-radius: 45px;
+  border: solid 1px #ddd;
+  width: 100%;
+  font-family: "Roboto", sans-serif;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.search2:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
